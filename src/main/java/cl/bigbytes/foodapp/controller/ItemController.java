@@ -31,7 +31,7 @@ public class ItemController {
         }
     }
 
-    @PostMapping
+    @PostMapping("/items")
     public ResponseEntity<Void> add(@RequestBody Item item) {
         try {
             itemService.addItem(item);
@@ -42,7 +42,7 @@ public class ItemController {
         }
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("items/{id}")
     public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody Item item) {
         try {
             item.setId(id);
@@ -55,7 +55,7 @@ public class ItemController {
     }
 
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("items/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         try {
             itemService.deleteItem(id);
@@ -66,7 +66,7 @@ public class ItemController {
         }
     }
 
-    @GetMapping
+    @GetMapping("/items")
     public ResponseEntity<List<Item>> getAll() {
         try {
             var items = itemService.getItems();
