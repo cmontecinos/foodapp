@@ -5,9 +5,9 @@ import cl.bigbytes.foodapp.service.ItemService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -28,6 +28,52 @@ public class ItemController {
         } catch ( Exception ex) {
             log.error("error while reading the user:", ex);
             return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping("/items")
+    public ResponseEntity<Void> add(@RequestBody Item item) {
+        try {
+            itemService.addItem(item);
+            return ResponseEntity.ok().build();
+        } catch (Exception ex) {
+            log.error("Error while adding the item:", ex);
+            return ResponseEntity.status(500).build();
+        }
+    }
+
+    @PutMapping("items/{id}")
+    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody Item item) {
+        try {
+            item.setId(id);
+            itemService.updateItem(item);
+            return ResponseEntity.ok().build();
+        } catch (Exception ex) {
+            log.error("Error while updating the item:", ex);
+            return ResponseEntity.status(500).build();
+        }
+    }
+
+
+    @DeleteMapping("items/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        try {
+            itemService.deleteItem(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception ex) {
+            log.error("Error while deleting the item:", ex);
+            return ResponseEntity.status(500).build();
+        }
+    }
+
+    @GetMapping("/items")
+    public ResponseEntity<List<Item>> getAll() {
+        try {
+            var items = itemService.getItems();
+            return ResponseEntity.ok(items);
+        } catch (Exception ex) {
+            log.error("Error while retrieving items:", ex);
+            return ResponseEntity.status(500).build();
         }
     }
 }

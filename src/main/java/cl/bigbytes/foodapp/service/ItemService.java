@@ -5,6 +5,8 @@ import cl.bigbytes.foodapp.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ItemService {
 
@@ -17,6 +19,21 @@ public class ItemService {
 
     public Item getItem(Integer id) {
         return itemRepository.getItem(id);
+    }
+    public void addItem(Item item) {
+        itemRepository.addItem(item);
+    }
+
+    public void updateItem(Item item) {
+        itemRepository.updateItem(item);
+    }
+
+    public void deleteItem(Integer id) {
+        itemRepository.deleteItem(id);
+    }
+
+    public List<Item> getItems() {
+        return itemRepository.getItems();
     }
 
 }
